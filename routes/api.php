@@ -27,7 +27,7 @@ Route::post('saveContacts', 'App\Http\Controllers\ContactController@saveContacts
 // Delete Contact
 Route::delete('deleteContact/{id}', 'App\Http\Controllers\ContactController@deleteContact');
 
-// Get Contact Detail
+// Get Detail Contact
 Route::get('contactDetail/{id}', 'App\Http\Controllers\ContactController@contactDetail');
 
 // Update Contact
