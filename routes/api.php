@@ -17,3 +17,18 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Get Contacts
+Route::get('getContacts', 'App\Http\Controllers\ContactController@getContacts');
+
+// Save Contacts
+Route::post('saveContacts', 'App\Http\Controllers\ContactController@saveContacts');
+
+// Delete Contact
+Route::delete('deleteContact/{id}', 'App\Http\Controllers\ContactController@deleteContact');
+
+// Get Contact Detail
+Route::get('contactDetail/{id}', 'App\Http\Controllers\ContactController@contactDetail');
+
+// Update Contact
+Route::post('updateContact/{id}', 'App\Http\Controllers\ContactController@updateContact');
