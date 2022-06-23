@@ -12,7 +12,7 @@
                     <th scope="col">Email</th>
                     <th scope="col">Designation</th>
                     <th scope="col">Contact Number</th>
-                    <th scope="col">Designation</th>
+                    <th scope="col">Biography</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -24,7 +24,7 @@
                     <td scope="row">{{ contact.email }}</td>
                     <td scope="row">{{ contact.designation }}</td>
                     <td scope="row">{{ contact.contact_no }}</td>
-                    <td scope="row">{{ contact.designation }}</td>
+                    <td scope="row">{{ contact.biography }}</td>
 
                     <td>
                         <button

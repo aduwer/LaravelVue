@@ -1,49 +1,36 @@
-require("./bootstrap");
-
 import Vue from "vue";
+import VueAxios from "vue-axios";
+import axios from "axios";
+Vue.use(VueAxios, axios);
+import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
+import MaterialKit from "../plugins/material-kit";
+
+Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
+Vue.use(MaterialKit);
 
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
-import VueAxios from "vue-axios";
-import axios from "axios";
-Vue.use(VueAxios, axios);
-
 import App from "./App.vue";
-import ContactList from "../js/components/ContactList";
-import Home from "../js/components/Home";
-import AddContact from "../js/components/AddContact";
-import EditContact from "../js/components/EditContact";
-
-import VueSweetalert2 from "vue-sweetalert2";
-window.Swal = require("sweetalert2");
-Vue.use(VueSweetalert2);
+import "vuetify/dist/vuetify.min.css";
 
 import utils from "./helpers/utilities";
 Vue.prototype.$utils = utils;
 
-const routes = [
-    {
-        name: "Example",
-        path: "/",
-        component: Home,
-    },
-    {
-        name: "contacts",
-        path: "/contacts",
-        component: ContactList,
-    },
-    {
-        name: "addcontacts",
-        path: "/addcontacts",
-        component: AddContact,
-    },
-    {
-        name: "getcontact",
-        path: "/getcontact/edit/:id?",
-        component: EditContact,
-    },
-];
+import router from "./routes.js";
+import vuetify from "../plugins/vuetify";
 
-const router = new VueRouter({ mode: "history", routes: routes });
-new Vue(Vue.util.extend({ router }, App)).$mount("#app");
+// SWEET ALERT
+import VueSweetalert2 from "vue-sweetalert2";
+window.Swal = require("sweetalert2");
+Vue.use(VueSweetalert2);
+
+const app = new Vue({
+    el: "#app",
+    vuetify,
+    router,
+    render: (h) => h(App),
+}).$mount("#app");
