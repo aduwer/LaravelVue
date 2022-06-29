@@ -18,15 +18,3 @@ use function Ramsey\Uuid\v1;
 Route::get('/', function () {
     return view('welcome');
 });
-
-
-// Route::prefix('api')->group(
-//     function () {
-//         // Get Contacts
-//         Route::get('getContacts', 'App\Http\Controllers\ContactController@getContacts');
-
-//         // Save Contacts
-//         Route::post('save_contact', 'App\Http\Controllers\ContactController@saveContacts');
-//     }
-
-// );

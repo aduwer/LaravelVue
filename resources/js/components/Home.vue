@@ -1,8 +1,9 @@
 <template>
-    <v-content>
+    <v-main>
         <div class="wrapper">
-            <parallax
+            <div
                 class="section page-header header-filter"
+                name="parallax"
                 :style="{ backgroundImage: 'url(' + image + ')' }"
             >
                 <div class="container">
@@ -31,7 +32,7 @@
                         </div>
                     </div>
                 </div>
-            </parallax>
+            </div>
             <div class="main main-raised">
                 <div class="section section-first">
                     <div class="container">
@@ -246,7 +247,7 @@
                 </div>
 
                 <v-footer dark padless>
-                    <v-card class="flex footer" flat tile>
+                    <v-card class="flex footer" tile>
                         <v-card-title>
                             <!-- <strong class="subheading"
                                 >Dołącz do naszych sieci
@@ -297,7 +298,7 @@
                 </v-footer>
             </div>
         </div>
-    </v-content>
+    </v-main>
 </template>
 
 <script>

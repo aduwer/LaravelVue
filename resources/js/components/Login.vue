@@ -1,8 +1,7 @@
 <template>
-    <v-content>
+    <v-main>
         <div class="wrapper">
             <v-app>
-                <!-- <v-main> -->
                 <v-container
                     :style="{ backgroundImage: 'url(' + image + ')' }"
                     fluid
@@ -39,12 +38,11 @@
                                                     <v-row>
                                                         <v-col cols="12">
                                                             <v-text-field
-                                                                v-model="
-                                                                    loginEmail
-                                                                "
+                                                                v-model="email"
                                                                 :rules="
                                                                     loginEmailRules
                                                                 "
+                                                                id="email"
                                                                 label="E-mail"
                                                                 required
                                                             ></v-text-field>
@@ -52,30 +50,18 @@
                                                         <v-col cols="12">
                                                             <v-text-field
                                                                 v-model="
-                                                                    loginPassword
-                                                                "
-                                                                :append-icon="
-                                                                    show1
-                                                                        ? 'eye'
-                                                                        : 'eye-off'
+                                                                    password
                                                                 "
                                                                 :rules="[
                                                                     rules.required,
                                                                     rules.min,
                                                                 ]"
-                                                                :type="
-                                                                    show1
-                                                                        ? 'text'
-                                                                        : 'password'
-                                                                "
+                                                                id="password"
+                                                                type="password"
                                                                 name="input-10-1"
                                                                 label="Hasło"
                                                                 hint="At least 8 characters"
                                                                 counter
-                                                                @click:append="
-                                                                    show1 =
-                                                                        !show1
-                                                                "
                                                             ></v-text-field>
                                                         </v-col>
                                                         <v-col
@@ -107,139 +93,22 @@
                                                                 Zaloguj się
                                                             </v-btn>
                                                         </v-col>
-                                                    </v-row>
-                                                </v-form>
-                                            </v-card-text>
-                                        </v-card>
-                                    </v-tab-item>
-                                    <v-tab-item>
-                                        <v-card class="px-4">
-                                            <v-card-text>
-                                                <v-form
-                                                    ref="registerForm"
-                                                    v-model="valid"
-                                                    lazy-validation
-                                                >
-                                                    <v-row>
-                                                        <v-col
-                                                            cols="12"
-                                                            sm="6"
-                                                            md="6"
-                                                        >
-                                                            <v-text-field
-                                                                v-model="
-                                                                    firstName
-                                                                "
-                                                                :rules="[
-                                                                    rules.required,
-                                                                ]"
-                                                                label="Imię"
-                                                                maxlength="20"
-                                                                required
-                                                            ></v-text-field>
-                                                        </v-col>
-                                                        <v-col
-                                                            cols="12"
-                                                            sm="6"
-                                                            md="6"
-                                                        >
-                                                            <v-text-field
-                                                                v-model="
-                                                                    lastName
-                                                                "
-                                                                :rules="[
-                                                                    rules.required,
-                                                                ]"
-                                                                label="Nazwisko"
-                                                                maxlength="20"
-                                                                required
-                                                            ></v-text-field>
-                                                        </v-col>
                                                         <v-col cols="12">
-                                                            <v-text-field
-                                                                v-model="email"
-                                                                :rules="
-                                                                    emailRules
-                                                                "
-                                                                label="E-mail"
-                                                                required
-                                                            ></v-text-field>
-                                                        </v-col>
-                                                        <v-col cols="12">
-                                                            <v-text-field
-                                                                v-model="
-                                                                    password
-                                                                "
-                                                                :append-icon="
-                                                                    show1
-                                                                        ? 'mdi-eye'
-                                                                        : 'mdi-eye-off'
-                                                                "
-                                                                :rules="[
-                                                                    rules.required,
-                                                                    rules.min,
-                                                                ]"
-                                                                :type="
-                                                                    show1
-                                                                        ? 'text'
-                                                                        : 'password'
-                                                                "
-                                                                name="input-10-1"
-                                                                label="Hasło"
-                                                                hint="At least 8 characters"
-                                                                counter
-                                                                @click:append="
-                                                                    show1 =
-                                                                        !show1
-                                                                "
-                                                            ></v-text-field>
-                                                        </v-col>
-                                                        <v-col cols="12">
-                                                            <v-text-field
-                                                                block
-                                                                v-model="verify"
-                                                                :append-icon="
-                                                                    show1
-                                                                        ? 'mdi-eye'
-                                                                        : 'mdi-eye-off'
-                                                                "
-                                                                :rules="[
-                                                                    rules.required,
-                                                                    passwordMatch,
-                                                                ]"
-                                                                :type="
-                                                                    show1
-                                                                        ? 'text'
-                                                                        : 'password'
-                                                                "
-                                                                name="input-10-1"
-                                                                label="Powtórz hasło"
-                                                                counter
-                                                                @click:append="
-                                                                    show1 =
-                                                                        !show1
-                                                                "
-                                                            ></v-text-field>
-                                                        </v-col>
-                                                        <v-spacer></v-spacer>
-                                                        <v-col
-                                                            class="d-flex ml-auto"
-                                                            cols="12"
-                                                            sm="5"
-                                                            xsm="12"
-                                                        >
-                                                            <v-btn
-                                                                x-large
-                                                                block
-                                                                :disabled="
-                                                                    !valid
-                                                                "
-                                                                color="success"
-                                                                @click="
-                                                                    validate
-                                                                "
-                                                                >Zarejestruj</v-btn
-                                                            >
+                                                            <v-subheader
+                                                                >Nie masz konta?
+                                                                <v-btn
+                                                                    :to="
+                                                                        appRoutes.register
+                                                                    "
+                                                                    class="registerbutton"
+                                                                    x-small
+                                                                    color="success"
+                                                                    dark
+                                                                >
+                                                                    Zarejestruj
+                                                                    się
+                                                                </v-btn>
+                                                            </v-subheader>
                                                         </v-col>
                                                     </v-row>
                                                 </v-form>
@@ -251,19 +120,64 @@
                         </v-flex>
                     </v-layout>
                 </v-container>
-                <!-- </v-main> -->
             </v-app>
         </div>
-    </v-content>
+    </v-main>
 </template>
 
 <script>
 import backgroundimage from "../../assets/images/login.jpg";
+import appRoutes from "../../consts/appRoutes";
 export default {
+    data: () => ({
+        url: document.head.querySelector('meta[name="url"]').content,
+        tab: 0,
+        tabs: [{ name: "Zaloguj się", icon: "person_outline" }],
+        valid: true,
+        appRoutes,
+        image: backgroundimage,
+        email: "",
+        password: "",
+        loginEmailRules: [
+            (v) => !!v || "Required",
+            (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+        ],
+        rules: {
+            required: (value) => !!value || "Required.",
+            min: (v) => (v && v.length >= 8) || "Min 8 characters",
+        },
+    }),
+
     methods: {
         validate() {
             if (this.$refs.loginForm.validate()) {
-                // submit form to server/API here...
+                let formData = new FormData();
+                formData.append("email", this.email);
+                formData.append("password", this.password);
+                console.log(this.email);
+                console.log(this.password);
+                let url = this.url + "/api/login";
+                const self = this;
+                console.log(url);
+                this.axios.post(url, formData).then((response) => {
+                    console.log("WSZEDLEM W PIERWSZY AXIOS");
+                    console.log(response);
+                    sleep(100000);
+                    self.axios
+                        .post(url, formData)
+                        .then((response) => {
+                            console.log("Wchodzi w then");
+                            if (response.status) {
+                                self.$router.go("/dashboard");
+                            } else {
+                                self.error = response.data.message;
+                            }
+                        })
+                        .catch((error) => {
+                            console.log("Wchodzi w catch");
+                            self.errors.push(error.response.data.error);
+                        });
+                });
             }
         },
         reset() {
@@ -272,43 +186,27 @@ export default {
         resetValidation() {
             this.$refs.form.resetValidation();
         },
-    },
-    data: () => ({
-        dialog: true,
-        tab: 0,
-        tabs: [
-            { name: "Zaloguj się", icon: "person_outline" },
-            { name: "Zarejestruj się", icon: "person_outline" },
-        ],
-        valid: true,
-        image: backgroundimage,
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        verify: "",
-        loginPassword: "",
-        loginEmail: "",
-        loginEmailRules: [
-            (v) => !!v || "Required",
-            (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
-        ],
-        emailRules: [
-            (v) => !!v || "Required",
-            (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
-        ],
 
-        show1: false,
-        rules: {
-            required: (value) => !!value || "Required.",
-            min: (v) => (v && v.length >= 8) || "Min 8 characters",
+        beforeRouteEnter(to, from, next) {
+            if (window.Laravel.isLoggedIn) {
+                return next("dashboard");
+            }
+            next();
         },
-    }),
+    },
 };
 </script>
 
 <style lang="scss" scoped>
 .elevation-12 {
     margin-top: -150px;
+}
+
+.v-subheader {
+    padding: 0px;
+    .registerbutton {
+        padding: 5px;
+        margin-left: 10px;
+    }
 }
 </style>

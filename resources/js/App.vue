@@ -1,39 +1,180 @@
 <template>
     <v-app class="app" id="app">
-        <Navbar />
+        <nav>
+            <v-app-bar app>
+                <v-app-bar-nav-icon
+                    @click="drawer = !drawer"
+                    class="grey--text"
+                ></v-app-bar-nav-icon>
+                <router-link to="/">
+                    <v-toolbar-title
+                        class="text-uppercase grey--text"
+                        href="https://localhost.pl"
+                    >
+                        <img
+                            class="logo"
+                            href="https://localhost.pl"
+                            :src="logonavbar"
+                        />
+                    </v-toolbar-title>
+                </router-link>
+                <v-spacer> </v-spacer>
+                <v-btn
+                    href="https://vuetifyjs.com/en/"
+                    color="red"
+                    class="md-danger md-lg d-none d-xl-flex d-lg-flex"
+                >
+                    <span> Vuetify </span>
+                    <v-icon right>exit_to_app</v-icon>
+                </v-btn>
+            </v-app-bar>
+
+            <v-navigation-drawer app v-model="drawer" v-if="isLoggedIn">
+                <v-list-item-content class="header">
+                    <v-list-item-title class="text-h6">
+                        Wybierz pracownika
+                    </v-list-item-title>
+                    <v-list-item-subtitle>
+                        Studio Software
+                    </v-list-item-subtitle>
+                </v-list-item-content>
+
+                <v-divider></v-divider>
+
+                <v-list dense nav>
+                    <v-list-item link :to="appRoutes.services">
+                        <v-list-item-icon>
+                            <v-icon>Ikona</v-icon>
+                        </v-list-item-icon>
+
+                        <v-list-item-content>
+                            <v-list-item-title>Wyloguj się</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-list>
+            </v-navigation-drawer>
+
+            <v-navigation-drawer app v-model="drawer" v-else>
+                <v-list-item-content class="header">
+                    <v-list-item-title class="text-h6">
+                        Wybierz pracownika
+                    </v-list-item-title>
+                    <v-list-item-subtitle>
+                        Studio Software
+                    </v-list-item-subtitle>
+                </v-list-item-content>
+
+                <v-divider></v-divider>
+
+                <v-list dense nav>
+                    <v-list-item
+                        v-for="item in items"
+                        :key="item.title"
+                        :to="item.route"
+                        link
+                    >
+                        <v-list-item-icon>
+                            <v-icon>{{ item.icon }}</v-icon>
+                        </v-list-item-icon>
+
+                        <v-list-item-content>
+                            <v-list-item-title>{{
+                                item.title
+                            }}</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-list>
+            </v-navigation-drawer>
+        </nav>
         <router-view />
     </v-app>
 </template>
 
 <script>
-import Navbar from "./components/Navbar";
+import logo from "../assets/images/ss_logo_czarne.png";
+import appRoutes from "../consts/appRoutes";
 export default {
     name: "app",
-    components: {
-        Navbar,
+    data() {
+        return {
+            items: [
+                {
+                    title: "Start",
+                    icon: "dashboard",
+                    route: appRoutes.home,
+                },
+                {
+                    title: "Usługi",
+                    icon: "image",
+                    route: appRoutes.services,
+                },
+                {
+                    title: "Zaloguj się",
+                    icon: "person_outline",
+                    route: appRoutes.logIn,
+                },
+            ],
+            right: null,
+            logonavbar: logo,
+            drawer: false,
+            appRoutes,
+            isLoggedIn: false,
+        };
+    },
+    created() {
+        if (window.Laravel.isLoggedin) {
+            this.isLoggedIn = true;
+        }
+    },
+    methods: {
+        logout(e) {
+            e.preventDefault();
+            this.$axios.get("/sanctum/csrf-cookie").then((respones) => {
+                this.$axios
+                    .post("/api/logout")
+                    .then((response) => {
+                        if (response.data.success) {
+                            window.location.href = "/";
+                        } else {
+                            console.log(response);
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error(error);
+                    });
+            });
+        },
     },
 };
 </script>
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Signika:wght@300&display=swap");
-// * {
-//     padding: 0;
-//     margin: 0;
-//     box-sizing: border-box;
-//     font-family: "Raleway", sans-serif;
-// font-weight: 400;
-// }
 
-// .app {
-//     min-height: 100vh;
-//     position: relative;
-//     background-color: #f1f1f1;
-// }
+.header {
+    text-align: center;
+}
+.v-divider {
+    display: none;
+}
 
-// .container {
-//     padding: 0 20px;
-//     max-width: 1140px;
-//     margin: 0 auto;
-// }
+.v-list-item__content {
+    .v-list-item__title {
+        font-family: "Signika", sans-serif !important;
+        font-weight: bold;
+        font-size: 24px;
+    }
+    .v-list-item__subtitle {
+        font-family: "Signika", sans-serif !important;
+        font-size: 18px;
+    }
+}
+
+.logo {
+    height: 25px !important;
+}
+
+.md-theme-default a:not(.md-button) {
+    color: black;
+}
 </style>

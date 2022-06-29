@@ -5,6 +5,8 @@ import AddContact from "../js/components/AddContact";
 import EditContact from "../js/components/EditContact";
 import Services from "../js/components/Services";
 import Login from "../js/components/Login";
+import Register from "../js/components/Register";
+import Dashboard from "../js/components/Dashboard";
 import appRoutes from "../consts/appRoutes";
 
 const routes = [
@@ -37,6 +39,16 @@ const routes = [
         name: "login",
         path: appRoutes.logIn,
         component: Login,
+    },
+    {
+        name: "register",
+        path: appRoutes.register,
+        component: Register,
+    },
+    {
+        name: "dashboard",
+        path: appRoutes.dashboard,
+        component: Dashboard,
     },
 ];
 

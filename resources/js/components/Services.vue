@@ -1,5 +1,5 @@
 <template>
-    <v-content>
+    <v-main>
         <div class="wrapper">
             <div class="main main-raised">
                 <v-img
@@ -154,7 +154,7 @@
                 </div>
 
                 <v-footer dark padless>
-                    <v-card class="flex footer" flat tile>
+                    <v-card class="flex footer" tile>
                         <v-card-title>
                             <h5>Nasze social media - dołącz do nas</h5>
 
@@ -200,7 +200,7 @@
                 </v-footer>
             </div>
         </div>
-    </v-content>
+    </v-main>
 </template>
 
 <script>

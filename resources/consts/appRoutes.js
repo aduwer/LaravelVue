@@ -5,4 +5,6 @@ export default {
     editContact: "/getcontact/edit/:id?",
     services: "/service",
     logIn: "/login",
+    register: "/register",
+    dashboard: "/dashboard",
 };

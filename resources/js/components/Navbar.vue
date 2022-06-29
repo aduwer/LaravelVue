@@ -20,7 +20,6 @@
             <v-spacer> </v-spacer>
             <v-btn
                 href="https://vuetifyjs.com/en/"
-                flat
                 color="red"
                 class="md-danger md-lg d-none d-xl-flex d-lg-flex"
             >
