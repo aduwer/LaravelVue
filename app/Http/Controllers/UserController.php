@@ -12,30 +12,22 @@ class UserController extends Controller
 {
     public function login(Request $request)
     {
-        try {
-            $credentials = [
-                'email' => $request->email,
-                'password' => $request->password
-            ];
-            if (Auth::attempt($credentials)) {
-                $success = true;
-                $message = "Logowanie prawidłowe";
-            } else {
-                $success = false;
-                $message = "Logowanie nieprawidlłowe";
-            }
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->password
+        ];
+        if (Auth::attempt($credentials)) {
+            $message = "Logowanie prawidłowe";
 
-            $response = [
-                'success' => $success,
+            return response()->json([
                 'message' => $message
-            ];
+            ], 200);
+        } else {
+            $message = "Logowanie nieprawidlłowe";
 
-            return response()->json($response);
-        } catch (\Throwable $ex) {
-
-            $message = $ex->getMessage();
-            var_dump($message);
-            die;
+            return response()->json([
+                'message' => $message
+            ], 422);
         }
     }
 
@@ -76,7 +68,6 @@ class UserController extends Controller
             'success' => $success,
             'message' => $message
         ];
-
         return response()->json($response);
     }
 }

@@ -154,28 +154,19 @@ export default {
                 let formData = new FormData();
                 formData.append("email", this.email);
                 formData.append("password", this.password);
-                console.log(this.email);
-                console.log(this.password);
                 let url = this.url + "/api/login";
-                const self = this;
-                console.log(url);
-                this.axios.post(url, formData).then((response) => {
-                    console.log("WSZEDLEM W PIERWSZY AXIOS");
-                    console.log(response);
-                    sleep(100000);
-                    self.axios
+                this.axios.get("/sanctum/csrf-cookie").then((response) => {
+                    this.axios
                         .post(url, formData)
                         .then((response) => {
-                            console.log("Wchodzi w then");
                             if (response.status) {
-                                self.$router.go("/dashboard");
+                                window.location.href = "/dashboard";
                             } else {
-                                self.error = response.data.message;
                             }
                         })
-                        .catch((error) => {
-                            console.log("Wchodzi w catch");
-                            self.errors.push(error.response.data.error);
+                        .catch(function (error) {
+                            console.error(error.response.data);
+                            alert("Nieprawidłowy adres email lub hasło!");
                         });
                 });
             }

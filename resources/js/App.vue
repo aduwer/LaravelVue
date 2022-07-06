@@ -42,9 +42,25 @@
                 <v-divider></v-divider>
 
                 <v-list dense nav>
-                    <v-list-item link :to="appRoutes.services">
+                    <v-list-item
+                        v-for="item in items_after_login"
+                        :key="item.title"
+                        :to="item.route"
+                        link
+                    >
                         <v-list-item-icon>
-                            <v-icon>Ikona</v-icon>
+                            <v-icon>{{ item.icon }}</v-icon>
+                        </v-list-item-icon>
+
+                        <v-list-item-content>
+                            <v-list-item-title>{{
+                                item.title
+                            }}</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                    <v-list-item link @click="logout">
+                        <v-list-item-icon>
+                            <v-icon>logout</v-icon>
                         </v-list-item-icon>
 
                         <v-list-item-content>
@@ -114,6 +130,14 @@ export default {
                     route: appRoutes.logIn,
                 },
             ],
+
+            items_after_login: [
+                {
+                    title: "Dashboard",
+                    icon: "dashboard",
+                    route: appRoutes.dashboard,
+                },
+            ],
             right: null,
             logonavbar: logo,
             drawer: false,
@@ -122,15 +146,15 @@ export default {
         };
     },
     created() {
-        if (window.Laravel.isLoggedin) {
+        if (window.LaravelUser.isLoggedin) {
             this.isLoggedIn = true;
         }
     },
     methods: {
         logout(e) {
             e.preventDefault();
-            this.$axios.get("/sanctum/csrf-cookie").then((respones) => {
-                this.$axios
+            this.axios.get("/sanctum/csrf-cookie").then((respones) => {
+                this.axios
                     .post("/api/logout")
                     .then((response) => {
                         if (response.data.success) {
