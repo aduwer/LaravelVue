@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRegisterRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +32,7 @@ class UserController extends Controller
         }
     }
 
-    public function register(Request $request)
+    public function register(UserRegisterRequest $request)
     {
         try {
             $user = new User();
@@ -45,6 +46,8 @@ class UserController extends Controller
         } catch (\Illuminate\Database\QueryException $ex) {
             $success = false;
             $message = $ex->getMessage();
+
+            return response()->json(['message' => 'error'], 500);
         }
         $response = [
             'success' => $success,

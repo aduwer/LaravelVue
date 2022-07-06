@@ -34,5 +34,5 @@ Route::get('contactDetail/{id}', 'App\Http\Controllers\ContactController@contact
 Route::post('updateContact/{id}', 'App\Http\Controllers\ContactController@updateContact');
 
 Route::post('login', 'App\Http\Controllers\UserController@login');
-Route::post('register', 'App\Http\Controllers\UserController@register');
+Route::post('register', 'App\Http\Controllers\UserController@register')->name('user.register');
 Route::post('logout', 'App\Http\Controllers\UserController@logout')->middleware('auth:sanctum');

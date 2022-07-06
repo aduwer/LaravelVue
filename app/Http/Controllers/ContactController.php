@@ -3,10 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use App\Models\User;
+use App\Services\ContactService;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
+    private ContactService $contactService;
+
+    /**
+     * @param ContactService $contactService
+     */
+    public function __construct(ContactService $contactService)
+    {
+        $this->contactService = $contactService;
+    }
+
     public function getContacts()
     {
         $contacts = Contact::all();
@@ -16,18 +28,8 @@ class ContactController extends Controller
     public function saveContacts(Request $request)
     {
         $contact = new Contact;
-        if ($request->has('image') && !empty($request->image)) {
-            $imageName = time() . '.' . $request->image->getClientOriginalExtension();
-            $request->image->move(public_path('images/gallery'), $imageName);
-            $path = ('public/images/gallery/' . $imageName);
-            $contact->image = $path;
-        }
 
-        $contact->name = $request->name;
-        $contact->email = $request->email;
-        $contact->designation = $request->designation;
-        $contact->bio = $request->bio;
-        $contact->contact_no = $request->contact_no;
+        $this->contactService->addContact($contact, $request->all());
 
         if ($contact->save()) {
             return response()->json(['status' => true, 'message' => 'Contact Added Successfully']);
@@ -39,6 +41,7 @@ class ContactController extends Controller
     public function deleteContact($id)
     {
         $contact = Contact::find($id);
+
         if ($contact->delete()) {
             return response()->json(['status' => true, 'message' => 'Contact Deleted Successfully']);
         } else {
@@ -71,8 +74,20 @@ class ContactController extends Controller
 
         if ($contact->save()) {
             return response()->json(['status' => true, 'message' => 'Contact Updated Successfully']);
-        } else {
-            return response()->json(['status' => false, 'message' => 'There is some problem. Please try again']);
         }
+
+        return response()->json(['status' => false, 'message' => 'There is some problem. Please try again']);
+
     }
+
+    public function userProjects($id)
+    {
+        /** @var User $user */
+        $user = User::find($id);
+
+        $projects = $user->projects;
+
+        return response()->json($projects);
+    }
+
 }

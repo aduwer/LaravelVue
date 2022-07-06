@@ -222,6 +222,7 @@ export default {
                     this.axios
                         .post(url, formData)
                         .then((response) => {
+                            response.data
                             if (response.status) {
                                 document.getElementById("name").value = "";
                                 document.getElementById("surname").value = "";
