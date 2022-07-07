@@ -31,5 +31,4 @@ class UserRegisterRequest extends FormRequest
             'surname' => 'Nazwisko'
         ];
     }
-
 }
