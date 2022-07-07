@@ -25,10 +25,10 @@ class UserRegisterRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'email' => 'Email',
-            'password' => 'Hasło',
-            'name' => 'Imię',
-            'surname' => 'Nazwisko'
+            'email' => 'email',
+            'password' => 'haslo',
+            'name' => 'imie',
+            'surname' => 'nazwisko'
         ];
     }
 }
