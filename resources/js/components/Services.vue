@@ -63,7 +63,7 @@
                                 tworzą wyjątkowi ludzie
                             </h2>
 
-                            <v-carousel hide-delimiters>
+                            <v-carousel hide-delimiters class="carousel">
                                 <v-carousel-item
                                     v-for="(item, i) in items"
                                     :key="i"

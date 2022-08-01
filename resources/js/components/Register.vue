@@ -175,7 +175,6 @@ import backgroundimage from "../../assets/images/login.jpg";
 import appRoutes from "../../consts/appRoutes";
 export default {
     data: () => ({
-        url: document.head.querySelector('meta[name="url"]').content,
         tab: 0,
         tabs: [{ name: "Zarejestruj się", icon: "person_outline" }],
         valid: true,
@@ -217,17 +216,12 @@ export default {
                 formData.append("surname", this.surname);
                 formData.append("email", this.email);
                 formData.append("password", this.password);
-                let url = this.url + "/api/register";
                 this.axios.get("/sanctum/csrf-cookie").then((response) => {
                     this.axios
-                        .post(url, formData)
+                        .post("api/register", formData)
                         .then((response) => {
                             if (response.status) {
-                                document.getElementById("name").value = "";
-                                document.getElementById("surname").value = "";
-                                document.getElementById("email").value = "";
-                                document.getElementById("password").value = "";
-                                document.getElementById("verify").value = "";
+                                this.$refs.registerForm.reset();
                                 this.$utils.showSuccess(
                                     "Rejestracja przebiegła pomyślnie",
                                     response.message

@@ -6,5 +6,9 @@ export default {
     services: "/service",
     logIn: "/login",
     register: "/register",
-    dashboard: "/dashboard",
+    profil: "/profil",
+    draw: "/draw",
+    coffe: "/coffe",
+    codereview: "/codereview",
+    increase: "/increase",
 };

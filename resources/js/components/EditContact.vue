@@ -79,15 +79,6 @@
                             </textarea>
                         </div>
 
-                        <!-- <div class="form-group" v-if="image">
-                            <img
-                                :src="`${url + '/' + image}`"
-                                alt="image"
-                                width="100"
-                                height="150"
-                            />
-                        </div> -->
-
                         <div class="custom-file">
                             <input
                                 type="file"
@@ -116,7 +107,7 @@
 export default {
     data() {
         return {
-            url: document.head.querySelector('meta[name="url"]').content,
+            // url: document.head.querySelector('meta[name="url"]').content,
             contacts: {},
             name: "",
             email: "",
@@ -178,15 +169,6 @@ export default {
                     .post(url, formData)
                     .then((response) => {
                         if (response.status) {
-                            // document.getElementById("name").value = "";
-                            // document.getElementById("email").value = "";
-                            // document.getElementById("designation").value = "";
-                            // document.getElementById("bio").value = "";
-                            // document.getElementById("contact_no").value = "";
-                            // document.getElementById(
-                            //     "validatedCustomFile"
-                            // ).value = "";
-
                             this.$utils.showSuccess(
                                 "Success",
                                 response.message

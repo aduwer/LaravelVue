@@ -133,9 +133,14 @@ export default {
 
             items_after_login: [
                 {
-                    title: "Dashboard",
+                    title: "Profil",
                     icon: "dashboard",
-                    route: appRoutes.dashboard,
+                    route: appRoutes.profil,
+                },
+                {
+                    title: "Losowanie",
+                    icon: "person",
+                    route: appRoutes.draw,
                 },
             ],
             right: null,

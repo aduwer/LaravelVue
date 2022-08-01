@@ -130,7 +130,6 @@ import backgroundimage from "../../assets/images/login.jpg";
 import appRoutes from "../../consts/appRoutes";
 export default {
     data: () => ({
-        url: document.head.querySelector('meta[name="url"]').content,
         tab: 0,
         tabs: [{ name: "Zaloguj się", icon: "person_outline" }],
         valid: true,
@@ -154,13 +153,12 @@ export default {
                 let formData = new FormData();
                 formData.append("email", this.email);
                 formData.append("password", this.password);
-                let url = this.url + "/api/login";
                 this.axios.get("/sanctum/csrf-cookie").then((response) => {
                     this.axios
-                        .post(url, formData)
+                        .post("api/login", formData)
                         .then((response) => {
                             if (response.status) {
-                                window.location.href = "/dashboard";
+                                window.location.href = "/profil";
                             } else {
                             }
                         })

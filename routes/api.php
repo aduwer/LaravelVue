@@ -18,21 +18,40 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Get Contacts
+// get contacts
 Route::get('getContacts', 'App\Http\Controllers\ContactController@getContacts');
 
-// Save Contacts
+// save contacts
 Route::post('saveContacts', 'App\Http\Controllers\ContactController@saveContacts');
 
-// Delete Contact
+// delete contact
 Route::delete('deleteContact/{id}', 'App\Http\Controllers\ContactController@deleteContact');
 
-// Get Detail Contact
+// get detail contact
 Route::get('contactDetail/{id}', 'App\Http\Controllers\ContactController@contactDetail');
 
-// Update Contact
+// update Contact
 Route::post('updateContact/{id}', 'App\Http\Controllers\ContactController@updateContact');
 
+// login, register, logout
 Route::post('login', 'App\Http\Controllers\UserController@login');
 Route::post('register', 'App\Http\Controllers\UserController@register')->name('user.register');
 Route::post('logout', 'App\Http\Controllers\UserController@logout')->middleware('auth:sanctum');
+
+// drawOnePersonForTheRaise
+Route::get('getPerson', 'App\Http\Controllers\DrawController@getOneUserFromTableUser');
+Route::post('getPersonWhoWorkFromOffice', 'App\Http\Controllers\DrawController@getOneUserFromTableUserInCompany');
+
+// add user who works from office today
+Route::post('coffe', 'App\Http\Controllers\Users_in_companyController@createUser');
+
+// get users for the draw
+Route::get('getUsersWhoWorkFromOffice', 'App\Http\Controllers\Users_in_companyController@showUser');   // TO MUSI BYC POPRAWIONE NA POST
+// delete users who work from office today
+Route::delete('deleteUsersWhoWorkFromOffice', 'App\Http\Controllers\Users_in_companyController@deleteUsers');
+
+// update User
+Route::post('updateUser', 'App\Http\Controllers\UserController@updateUser');
+
+// get user for code review
+Route::post('getOneUserFromTableToCodeReview', 'App\Http\Controllers\DrawController@getOneUserFromTableToCodeReview');

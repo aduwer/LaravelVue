@@ -7,6 +7,10 @@ import Services from "../js/components/Services";
 import Login from "../js/components/Login";
 import Register from "../js/components/Register";
 import Dashboard from "../js/components/Dashboard";
+import Draw from "../js/components/Draw";
+import Coffe from "../js/components/Coffe";
+import CodeReview from "../js/components/CodeReview";
+import Increase from "../js/components/Increase";
 import appRoutes from "../consts/appRoutes";
 
 const routes = [
@@ -46,9 +50,29 @@ const routes = [
         component: Register,
     },
     {
-        name: "dashboard",
-        path: appRoutes.dashboard,
+        name: "profil",
+        path: appRoutes.profil,
         component: Dashboard,
+    },
+    {
+        name: "draw",
+        path: appRoutes.draw,
+        component: Draw,
+    },
+    {
+        name: "coffe",
+        path: appRoutes.coffe,
+        component: Coffe,
+    },
+    {
+        name: "CodeReview",
+        path: appRoutes.codereview,
+        component: CodeReview,
+    },
+    {
+        name: "increase",
+        path: appRoutes.increase,
+        component: Increase,
     },
 ];
 

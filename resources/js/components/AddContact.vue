@@ -101,7 +101,6 @@
 export default {
     data() {
         return {
-            url: document.head.querySelector('meta[name="url"]').content,
             contacts: {},
             name: "",
             email: "",
@@ -136,9 +135,8 @@ export default {
                 formData.append("designation", this.designation);
                 formData.append("bio", this.bio);
                 formData.append("contact_no", this.contact_no);
-                let url = this.url + "/api/saveContacts";
                 this.axios
-                    .post(url, formData)
+                    .post("api/saveContacts", formData)
                     .then((response) => {
                         if (response.status) {
                             document.getElementById("name").value = "";

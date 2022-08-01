@@ -25,19 +25,23 @@ class UserController extends Controller
     {
         try {
             $user = new User();
-            $this->userService->addUser($user, $request->all());
-            $user->save();
-            $success = true;
-            $message = "Rejestracja przebiegła pomyślnie";
+            if ($this->userService->addUser($user, $request->all())) {
+                $message = "Rejestracja przebiegła pomyślnie";
+                return response()->json([
+                    'message' => $message
+                ], 200);
+            } else {
+                $message = "Błąd podczas rejestracji użytkownika";
+                return response()->json([
+                    'message' => $message
+                ], 500);
+            }
         } catch (\Illuminate\Database\QueryException $ex) {
-            $success = false;
             $message = $ex->getMessage();
+            return response()->json([
+                'message' => $message
+            ], 500);
         }
-        $response = [
-            'success' => $success,
-            'message' => $message
-        ];
-        return response()->json($response);
     }
 
     public function login(Request $request)
@@ -48,7 +52,6 @@ class UserController extends Controller
         ];
         if (Auth::attempt($credentials)) {
             $message = "Logowanie prawidłowe";
-
             return response()->json([
                 'message' => $message
             ], 200);
@@ -63,6 +66,7 @@ class UserController extends Controller
 
     public function logout()
     {
+        $user = Auth::user();
         try {
             Session::flush();
             $success = true;
@@ -77,5 +81,28 @@ class UserController extends Controller
             'message' => $message
         ];
         return response()->json($response);
+    }
+
+    public function updateUser(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            if ($this->userService->updateUserProfil($user, $request->all())) {
+                $message = "Dane użytkownika zaktualizowane pomyślnie";
+                return response()->json([
+                    'message' => $message
+                ], 200);
+            } else {
+                $message = "Błąd podczas aktualizacji danych użytkownika";
+                return response()->json([
+                    'message' => $message
+                ], 500);
+            }
+        } catch (\Illuminate\Database\QueryException $ex) {
+            $message = $ex->getMessage();
+            return response()->json([
+                'message' => $message
+            ], 500);
+        }
     }
 }
