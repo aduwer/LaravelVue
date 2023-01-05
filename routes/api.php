@@ -1,7 +1,9 @@
 <?php
 
+use App\Mail\CoffeDrawEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,25 +35,23 @@ Route::get('contactDetail/{id}', 'App\Http\Controllers\ContactController@contact
 // update Contact
 Route::post('updateContact/{id}', 'App\Http\Controllers\ContactController@updateContact');
 
-// login, register, logout
+// ----------------------------------------------LOGIN REGISTER LOGOUT----------------------------------------------------------
+
 Route::post('login', 'App\Http\Controllers\UserController@login');
 Route::post('register', 'App\Http\Controllers\UserController@register')->name('user.register');
 Route::post('logout', 'App\Http\Controllers\UserController@logout')->middleware('auth:sanctum');
 
-// drawOnePersonForTheRaise
-Route::get('getPerson', 'App\Http\Controllers\DrawController@getOneUserFromTableUser');
-Route::post('getPersonWhoWorkFromOffice', 'App\Http\Controllers\DrawController@getOneUserFromTableUserInCompany');
+// -------------------------------------------------DRAW------------------------------------------------------------------------
 
-// add user who works from office today
-Route::post('coffe', 'App\Http\Controllers\Users_in_companyController@createUser');
+// ---------------INCREASE----------------
+Route::get('getPerson', 'App\Http\Controllers\DrawController@getOneUserFromTableUser'); // winner of the draw (increase)
 
-// get users for the draw
-Route::get('getUsersWhoWorkFromOffice', 'App\Http\Controllers\Users_in_companyController@showUser');   // TO MUSI BYC POPRAWIONE NA POST
-// delete users who work from office today
-Route::delete('deleteUsersWhoWorkFromOffice', 'App\Http\Controllers\Users_in_companyController@deleteUsers');
+// ----------------COFFE------------------
+Route::post('coffe', 'App\Http\Controllers\Users_in_companyController@createUser'); // add user who works from office today
+Route::get('getUsersWhoWorkFromOffice', 'App\Http\Controllers\Users_in_companyController@showUser'); // show users for the draw (coffe)
+Route::post('getPersonWhoWorkFromOffice', 'App\Http\Controllers\DrawController@getOneUserFromTableUserInCompany');  // winner of the draw (coffe) // POST, ponieważ przekazywany jest request w postaci kawy 
+Route::delete('deleteUsersWhoWorkFromOffice', 'App\Http\Controllers\Users_in_companyController@deleteUsers'); // delete users who work from office today
 
-// update User
-Route::post('updateUser', 'App\Http\Controllers\UserController@updateUser');
-
-// get user for code review
-Route::post('getOneUserFromTableToCodeReview', 'App\Http\Controllers\DrawController@getOneUserFromTableToCodeReview');
+// -------------CODE REVIEW------------
+Route::post('updateUser', 'App\Http\Controllers\UserController@updateUser'); // update User (profile)
+Route::post('getOneUserFromTableToCodeReview', 'App\Http\Controllers\DrawController@getOneUserFromTableToCodeReview'); // winner of the draw (code review) // POST, ponieważ przekazywany jest request 

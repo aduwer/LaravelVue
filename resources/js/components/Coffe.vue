@@ -105,7 +105,6 @@
                             </v-col>
                         </v-row>
                     </v-container>
-
                     <h4
                         class="description text-center description-type-capacity"
                     >
@@ -126,9 +125,21 @@
                             </v-col>
                         </v-row>
                     </v-container>
+                    <v-input
+                        class="hidden"
+                        type="hidden"
+                        id="fullname"
+                        name="fullname"
+                        v-model="fullNameDatabase"
+                        :value="fullNameDatabase"
+                    />
                     <div class="md-layout">
                         <div class="md-layout-item mx-auto text-center">
-                            <v-btn class="success draw" @click="loadDataWinner"
+                            <v-btn
+                                class="success draw"
+                                :loading="loading"
+                                :disabled="loading"
+                                @click="loadDataWinner"
                                 >Losowanie</v-btn
                             >
                         </div>
@@ -189,7 +200,12 @@ export default {
             surname: "",
             selectedType: "",
             selectedCapacity: "",
+            loading: false,
         };
+    },
+
+    created() {
+        this.loadDataAllUsers();
     },
 
     methods: {
@@ -222,13 +238,6 @@ export default {
                 });
             }
         },
-        // reset() {
-        //     this.$refs.form.reset();
-        // },
-        // resetValidation() {
-        //     this.$refs.form.resetValidation();
-        // },
-
         loadDataAllUsers() {
             this.axios.get("api/getUsersWhoWorkFromOffice").then((response) => {
                 this.users = response.data;
@@ -236,14 +245,22 @@ export default {
         },
         loadDataWinner() {
             if (this.$refs.theWinner.validate()) {
+                this.loading = true;
                 let formData = new FormData();
                 formData.append("type", this.selectedType);
                 formData.append("capacity", this.selectedCapacity);
+                formData.append("fullname", this.fullNameDatabase);
+                formData.append("email", this.emailAdressDatabase);
                 this.axios.get("/sanctum/csrf-cookie").then((response) => {
                     this.axios
                         .post("api/getPersonWhoWorkFromOffice", formData)
                         .then((response) => {
-                            this.person = response.data;
+                            this.loading = false;
+                            this.person = response.data.singleUser;
+                            this.$utils.showSuccess(
+                                "Wysłaliśmy wiadomość do użytkownika o tym, że został wylosowany",
+                                response.message
+                            );
                         })
                         .catch((error) => {
                             this.errors.push(error.response.data.error);
@@ -269,8 +286,19 @@ export default {
                 });
         },
     },
-    created() {
-        this.loadDataAllUsers();
+
+    computed: {
+        fullNameDatabase() {
+            return (
+                window.LaravelUser.user.name +
+                " " +
+                window.LaravelUser.user.surname
+            );
+        },
+
+        emailAdressDatabase() {
+            return window.LaravelUser.user.email;
+        },
     },
 };
 </script>
@@ -379,7 +407,15 @@ h6,
     }
 }
 
+.hidden {
+    display: none;
+}
+
 .draw {
     margin-top: 10px;
+}
+
+.v-progress-circular {
+    margin: 1rem;
 }
 </style>

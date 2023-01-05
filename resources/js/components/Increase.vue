@@ -30,7 +30,11 @@
                     </h5>
                     <div class="md-layout">
                         <div class="md-layout-item mx-auto text-center">
-                            <v-btn class="success" @click.prevent="loadData()"
+                            <v-btn
+                                class="success"
+                                @click.prevent="loadData()"
+                                :loading="loading"
+                                :disabled="loading"
                                 >Losowanie</v-btn
                             >
                         </div>
@@ -72,14 +76,16 @@ export default {
             appRoutes,
             increase,
             person: [],
+            loading: false,
         };
     },
 
     methods: {
         loadData() {
+            this.loading = true;
             this.axios.get("api/getPerson").then((response) => {
-                this.person = response.data;
-                console.log(this.person);
+                this.loading = false;
+                this.person = response.data.singleUser;
             });
         },
     },

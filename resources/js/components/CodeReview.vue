@@ -31,11 +31,21 @@
                             label="Wybierz programistę jakiego potrzebujesz"
                             :rules="[rules.required]"
                         ></v-select>
+                        <v-input
+                            class="hidden"
+                            type="hidden"
+                            id="fullname"
+                            name="fullname"
+                            v-model="fullNameDatabase"
+                            :value="fullNameDatabase"
+                        />
                         <div class="md-layout">
                             <div class="md-layout-item mx-auto text-center">
                                 <v-btn
                                     class="md-success"
                                     @click="loadDataWinner"
+                                    :loading="loading"
+                                    :disabled="loading"
                                     >Losowanie</v-btn
                                 >
                             </div>
@@ -81,25 +91,42 @@ export default {
                 required: (value) => !!value || "Required",
             },
             selectedType: "",
+            loading: false,
         };
     },
 
     methods: {
         loadDataWinner() {
             if (this.$refs.theWinner.validate()) {
+                this.loading = true;
                 let formData = new FormData();
                 formData.append("type", this.selectedType);
+                formData.append("fullname", this.fullNameDatabase);
                 this.axios.get("/sanctum/csrf-cookie").then((response) => {
                     this.axios
                         .post("api/getOneUserFromTableToCodeReview", formData)
                         .then((response) => {
-                            this.person = response.data;
+                            this.loading = false;
+                            this.person = response.data.singleUser;
+                            this.$utils.showSuccess(
+                                "Wysłaliśmy wiadomość do użytkownika o tym, że został wylosowany do przeprowadzenia Code Review",
+                                response.message
+                            );
                         })
                         .catch((error) => {
                             this.errors.push(error.response.data.error);
                         });
                 });
             }
+        },
+    },
+    computed: {
+        fullNameDatabase() {
+            return (
+                window.LaravelUser.user.name +
+                " " +
+                window.LaravelUser.user.surname
+            );
         },
     },
 };
@@ -123,7 +150,7 @@ h6,
 .v-card {
     margin-top: 40px;
     margin-left: 20px;
-    margin-right: 10px;
+    margin-right: 20px;
 }
 
 .pay-raise {
@@ -131,7 +158,7 @@ h6,
     padding-bottom: 10px;
     padding-left: 10px;
     padding-right: 10px;
-    margin-right: 10px;
+    margin-right: 20px;
 }
 .v-sheet.v-card:not(.v-sheet--outlined) {
     box-shadow: none;
@@ -151,6 +178,7 @@ h6,
     .winner {
         height: 120px !important;
         margin-left: 20px;
+        margin-right: 20px;
     }
 }
 </style>

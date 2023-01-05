@@ -116,7 +116,6 @@
                                                     :src="
                                                         backgroundStudioSoftware2
                                                     "
-                                                    class="img-responsive"
                                                 ></v-img
                                             ></v-col>
                                             <v-col md="6"

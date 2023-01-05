@@ -7,6 +7,7 @@ use App\Http\Requests\UserRegisterRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Services\UserService;
+use App\Models\Users_in_company;
 use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
@@ -67,6 +68,7 @@ class UserController extends Controller
     public function logout()
     {
         $user = Auth::user();
+        Users_in_company::truncate();
         try {
             Session::flush();
             $success = true;
